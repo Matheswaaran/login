@@ -33,7 +33,7 @@ app.config(['$routeProvider',
                 redirectTo: '/login'
             });
   }])
-    .run(function ($rootScope, $location, Data) {
+    .run(function ($rootScope, $location, Data,myService) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.authenticated = false;
             Data.get('session').then(function (results) {
@@ -42,14 +42,121 @@ app.config(['$routeProvider',
                     $rootScope.uid = results.uid;
                     $rootScope.name = results.name;
                     $rootScope.email = results.email;
+                    $rootScope.regno = results.regno;
+                    $rootScope.user_details=results;
+                    $rootScope.quiz_name;
+                    $rootScope.quiz_tab;
+                    $rootScope.quiz_time_hours;
+                    $rootScope.quiz_time_mins;
+                    $rootScope.result;
+                   // quizname,quiztab,hours,mins
+                    $rootScope.res_tab;
+                   // myService.set_user(results);
+                    $location.path(nextUrl);
                 } else {
                     var nextUrl = next.$$route.originalPath;
-                    if (nextUrl == '/signup' || nextUrl == '/login') {
+                    if (nextUrl == '/signup' || nextUrl == '/login' ) {
 
-                    } else {
-                        $location.path("/login");
+                    }else{
+                        $location.path('/login');
                     }
                 }
             });
         });
+    })
+    .factory('myService', function() {
+        /**
+        var savedData_name = {};
+        var savedData_tab = {};
+        var savedData_hours = {};
+        var savedData_mins = {};
+        var resultdata={};
+        var user_arr={};
+        var result={};
+        var setvar=1;
+            function set(data_name,data_tab,data_hours,data_mins) {
+            // console.log("data saved "+data_name + setvar + " " + data_tab+" "+data_mins+" "+data_hours);
+                savedData_name = data_name;
+                savedData_tab=data_tab;
+                savedData_hours=data_hours;
+                savedData_mins=data_mins;
+                setvar=1;
+            }
+            function set_result(data_result){
+                result=data_result;
+                                        console.log("saved "+result);
+
+            }
+
+            function get_result(){
+                                        console.log("returned "+result);
+
+                return result;
+            }
+
+            function get_name() {
+                //console.log("data returned "+savedData_name+setvar);
+                if(setvar==0){
+                         return null;
+                    }else{
+                        //console.log("returned");
+                         return savedData_name;
+                     }
+                }
+            function get_tab(){
+                    //console.log("data returned "+savedData_tab+setvar);
+                     if(setvar==0){
+                        return null;
+                    }else{
+                     //    console.log("returned");
+                    return savedData_tab;
+                    }
+                }
+
+
+            function get_hours(){
+                    //console.log("data returned "+savedData_hours+setvar);
+                    if(setvar==0){
+                        return null;
+                     }else{
+                       //  console.log("returned");
+                        return savedData_hours;
+                    }
+                }
+
+            function get_mins(){
+                    //console.log("data returned "+savedData_mins+setvar);
+                    if(setvar==0){
+                         return null;
+                    }else{
+                     //    console.log("returned");
+                        return savedData_mins;
+                    }
+                }
+
+
+
+                function set_user(userarr){
+                   // console.log(userarr.name);
+                    user_arr=userarr;
+                }
+                function get_user(){
+                  //  console.log(user_arr.name+"returned");
+                    return user_arr;
+                }
+
+                return {
+                 set: set,
+                 get_name: get_name,
+                 get_tab:get_tab,
+                 set_user:set_user,
+                 get_user:get_user,
+                 get_mins:get_mins,
+                 get_hours:get_hours,
+                 set_result:set_result,
+                 get_result:get_result
+                }
+                */
+
     });
+
